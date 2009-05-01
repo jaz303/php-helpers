@@ -38,7 +38,7 @@ function parse_simple_selector($s) {
  * Any other argument will be passed to url_for(), which should be implemented by
  * your application.
  */
-function parse_url($u) {
+function generate_url($u) {
     return is_scalar($u) ? (string) $u : url_for($u);
 }
 
@@ -68,7 +68,7 @@ function i($src, $options_or_selector = array(), $options = array()) {
 }
 
 function link_to($html, $url, $options = array()) {
-    $options['href'] = parse_url($url);
+    $options['href'] = generate_url($url);
     return tag('a', $html, $options);
 }
 
