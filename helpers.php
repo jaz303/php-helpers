@@ -51,8 +51,7 @@ function is_enumerable($thing) {
 
 function array_path($array, $path, $default = null) {
     $path = explode('.', $path);
-    while (count($path)) {
-        $key = array_shift($path);
+    while ($key = array_shift($path)) {
         if (!isset($array[$key])) return $default;
         $array = $array[$key];
     }
@@ -62,8 +61,7 @@ function array_path($array, $path, $default = null) {
 function array_path_unset(&$array, $path) {
     $tmp = & $array;
     $path = explode('.', $path);
-    while (count($path) > 1) {
-        $key = array_shift($path);
+    while ($key = array_shift($path)) {
         if (!isset($tmp[$key])) return;
         $tmp = & $tmp[$key];
     }
