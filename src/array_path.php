@@ -14,7 +14,8 @@ function array_path($array, $path, $default = null) {
 function array_path_unset(&$array, $path) {
     $tmp = & $array;
     $path = explode('.', $path);
-    while ($key = array_shift($path)) {
+    while (count($path) > 1) {
+        $key = array_shift($path);
         if (!isset($tmp[$key])) return;
         $tmp = & $tmp[$key];
     }
@@ -31,7 +32,8 @@ function array_without_path($array) {
 function array_path_replace(&$array, $path, $value) {
     $tmp = & $array;
     $path = explode('.', $path);
-    while ($key = array_shift($path)) {
+    while (count($path) > 1) {
+        $key = array_shift($path);
         if (!isset($tmp[$key])) $tmp[$key] = array();
         $tmp = & $tmp[$key];
     }

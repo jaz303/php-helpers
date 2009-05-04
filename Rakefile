@@ -1,6 +1,6 @@
 SOURCES = %w(preamble support array_path asset tag form)
 
-task :compile do
+file 'helpers.php' => SOURCES.map { |s| "src/#{s}.php"} do
   File.open('helpers.php', 'w') do |out|
     out.write("<?php\n")
     SOURCES.each do |src|
@@ -17,4 +17,8 @@ task :compile do
     end
     out.write("?>\n")
   end
+end
+
+task :test => 'helpers.php' do
+  sh "cd test; php test.php"
 end
