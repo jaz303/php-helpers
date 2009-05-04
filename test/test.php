@@ -42,6 +42,7 @@ function assert_equal($left, $right) {
 
 require '../helpers.php';
 require 'array_path_test.php';
+require 'url_test.php';
 
 foreach (get_declared_classes() as $class) {
     if (is_subclass_of($class, 'TestCase')) {
