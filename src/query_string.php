@@ -2,18 +2,18 @@
 /**
  * Array URL encode
  */
-function array_url_encode($array, $omit = null) {
+function query_string_for($array, $omit = null) {
     $out = array();
-    _array_url_encode_recurse($array, $out, $omit, '');
+    _query_string_for_recurse($array, $out, $omit, '');
     return implode('&', $out);
 }
 
-function _array_url_encode_recurse($src, &$dst, $omit, $prefix) {
+function _query_string_for_recurse($src, &$dst, $omit, $prefix) {
     foreach ($src as $k => $v) {
         if ($k === $omit) continue;
         $name = strlen($prefix) ? "{$prefix}[$k]" : $k;
         if (is_enumerable($v)) {
-            _array_url_encode_recurse($v, $dst, $omit, $name);
+            _query_string_for_recurse($v, $dst, $omit, $name);
         } else {
             $dst[] = urlencode($name) . '=' . urlencode($v);
         }

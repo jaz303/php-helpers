@@ -20,7 +20,7 @@ class QueryStringTest extends TestCase
         
         assert_equal(
             $expect,
-            array_url_encode($this->array)
+            query_string_for($this->array)
         );
     }
     
@@ -30,7 +30,7 @@ class QueryStringTest extends TestCase
         
         assert_equal(
             $expect,
-            array_url_encode($this->array, 'i')
+            query_string_for($this->array, 'i')
         );
     }
 }
