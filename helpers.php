@@ -16,7 +16,7 @@ if (!defined('STATIC_IMAGE_DIR'))   define('STATIC_IMAGE_DIR', 'images');
 if (!defined('STATIC_CSS_DIR'))     define('STATIC_CSS_DIR', 'stylesheets');
 
 //
-// Helper helpers!
+// Support
 
 /**
  * Parse a selector of the form #foo.bar.baz into constituent ID and classes.
@@ -48,6 +48,16 @@ function is_enumerable($thing) {
 
 //
 // Array paths (docs coming soon)
+
+function array_path($array, $path, $default = null) {
+    $path = explode('.', $path);
+    while (count($path)) {
+        $key = array_shift($path);
+        if (!isset($array[$key])) return $default;
+        $array = $array[$key];
+    }
+    return $array;
+}
 
 function array_path_unset(&$array, $path) {
     $tmp = & $array;
@@ -86,45 +96,7 @@ function array_path_to_name($path) {
 }
 
 //
-//
-
-function h($html, $q = ENT_QUOTES) {
-    return htmlentities($html, $q);
-}
-
-/**
- * Create an image tag.
- *
- * i('foo.png', array('alt' => 'Hello'))
- * i('bar.png', '#my-image')
- * i('baz.gif', '#my-image.my-class', array('width' => 500))
- */
-function i($src, $options_or_selector = array(), $options = array()) {
-    $options += parse_simple_selector($options_or_selector);
-    $options['src'] = url_for_image($src);
-    $options += array('alt' => '');
-    return empty_tag('img', $as, $options);
-}
-
-function link_to($html, $url, $options = array()) {
-    $options['href'] = generate_url($url);
-    return tag('a', $html, $options);
-}
-
-//
-// Asset URLs
-
-function url_for_image($image) {
-    return url_for_asset($image, STATIC_IMAGE_DIR);
-}
-
-function url_for_stylesheet($stylesheet) {
-    return url_for_asset($stylesheet, STATIC_CSS_DIR);
-}
-
-function url_for_javascript($js) {
-    return url_for_asset($js, STATIC_JS_DIR);
-}
+// Asset
 
 /**
  * Returns the URL for static asset $what
@@ -141,6 +113,18 @@ function url_for_asset($what, $where) {
     }
 }
 
+function url_for_image($image) {
+    return url_for_asset($image, STATIC_IMAGE_DIR);
+}
+
+function url_for_stylesheet($stylesheet) {
+    return url_for_asset($stylesheet, STATIC_CSS_DIR);
+}
+
+function url_for_javascript($js) {
+    return url_for_asset($js, STATIC_JS_DIR);
+}
+
 //
 // Tag Helpers
 
@@ -155,6 +139,13 @@ function javascript_include_tag($js, $options = array()) {
     $options['src'] = url_for_javascript($js);
     $options['type'] = 'text/javascript';
     return tag('script', '', $options);
+}
+
+//
+//
+
+function h($html, $q = ENT_QUOTES) {
+    return htmlentities($html, $q);
 }
 
 function tag($tag, $content, $attribs = array()) {
@@ -174,6 +165,25 @@ function attribute_list($attribs) {
 	    $out .= " $k='$v'";
     }
     return $out;
+}
+
+/**
+ * Create an image tag.
+ *
+ * i('foo.png', array('alt' => 'Hello'))
+ * i('bar.png', '#my-image')
+ * i('baz.gif', '#my-image.my-class', array('width' => 500))
+ */
+function i($src, $options_or_selector = array(), $options = array()) {
+    $options += parse_simple_selector($options_or_selector);
+    $options['src'] = url_for_image($src);
+    $options += array('alt' => '');
+    return empty_tag('img', $as, $options);
+}
+
+function link_to($html, $url, $options = array()) {
+    $options['href'] = generate_url($url);
+    return tag('a', $html, $options);
 }
 
 //
@@ -266,4 +276,5 @@ function text_area_tag($name, $value, $options = array()) {
     $options['name'] = $name;
     return tag('textarea', $value, $options + array('rows' => 6, 'cols' => 50));
 }
+
 ?>
