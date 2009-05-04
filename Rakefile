@@ -1,4 +1,4 @@
-SOURCES = %w(preamble support array_path url asset tag form)
+SOURCES = %w(preamble support array_path query_string asset tag form)
 
 file 'helpers.php' => SOURCES.map { |s| "src/#{s}.php"} do
   File.open('helpers.php', 'w') do |out|
