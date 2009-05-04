@@ -44,4 +44,15 @@ function link_to($html, $url, $options = array()) {
     return tag('a', $html, $options);
 }
 
+function mail_to($html, $address = null, $options = array()) {
+    if (is_array($address)) {
+        $options = $address;
+        $address = null;
+    }
+    if ($address === null) {
+        $address = $html;
+    }
+    return link_to($html, "mailto:$address", $options);
+}
+
 ?>
