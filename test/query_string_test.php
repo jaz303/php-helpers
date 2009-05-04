@@ -1,5 +1,5 @@
 <?php
-class UrlTest extends TestCase
+class QueryStringTest extends TestCase
 {
     function setup() {
         $this->array = array(
