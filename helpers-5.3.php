@@ -379,32 +379,56 @@ function radio_button_tag($name, $value, $current_value = null, $options = array
     return empty_tag('input', $options);
 }
 
-function select_tag($name, $values, $selected = null, $options = array()) {
-    $option_string = '';
-    foreach ($values as $v) {
-        $v = h($v);
-        $s = ($selected !== null && $selected == $v) ? ' selected="selected"' : '';
-        $option_string .= "<option{$sel}>{$v}</option>\n";
-    }
-    $options['name'] = $name;
-    return tag('select', $option_string, $options);
-}
-
-function key_select_tag($name, $values, $selected = null, $options = array()) {
-    $option_string = '';
-    foreach ($values as $k => $v) {
-        $s = ($selected !== null && $selected == $k) ? ' selected="selected"' : '';
-        $k = h($k);
-        $v = h($v);
-        $option_string .= "<option value='$k'{$sel}>{$v}</option>\n";
-    }
-    $options['name'] = $name;
-    return tag('select', $option_string, $options);
-}
-
 function text_area_tag($name, $value, $options = array()) {
     $options['name'] = $name;
     return tag('textarea', $value, $options + array('rows' => 6, 'cols' => 50));
+}
+
+function select_box($name, $choices, $selected = null, $options = array()) {
+    
+    $options += array('keys' => true, 'multiple' => false, 'groups' => false);
+    $options['name'] = $name;
+    
+    $ofs_opts = array('groups' => $options['groups'], 'keys' => $options['keys']);
+    unset($options['groups']);
+    unset($options['keys']);
+    
+    if ($options['multiple']) $selected = (array) $selected;
+    
+    return tag('select', options_for_select($choices, $selected, $ofs_opts), $options);
+    
+}
+
+function options_for_select($choices, $selected = null, $options = array()) {
+    $options += array('groups' => false, 'keys' => true);
+    $html = '';
+    if ($options['groups']) {
+        foreach ($choices as $group_label => $group_options) {
+            $html .= '<optgroup label="' . h($group_label) . '">';
+            $html .= option_group($group_options, $selected, $options['keys']);
+            $html .= '</optgroup>';
+        }
+    } else {
+        $html .= option_group($choices, $selected, $options['keys']);
+    }
+    return $html;
+}
+
+function option_group($choices, $selected, $use_keys) {
+    $html = '';
+    foreach ($choices as $k => $v) {
+        $c = $use_keys ? $k : $v;
+        $s = is_array($selected) ? in_array($c, $selected) : ($selected == $c);
+        $s = $s ? ' selected="selected"' : '';
+        $v = htmlentities($v);
+        if ($use_keys) {
+            $k = htmlentities($k);
+            $html .= "<option value=\"$k\"{$s}>{$v}</option>";
+        } else {
+            $html .= "<option{$s}>{$v}</option>";
+        }
+    }
+    return $html;
 }
 
 //
