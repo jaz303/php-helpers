@@ -1,5 +1,5 @@
 <?php
-class ArrayPathTest extends TestCase
+class ArrayPathTest extends ztest\UnitTestCase
 {
     function setup() {
         $this->foo = array(

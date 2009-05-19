@@ -1,4 +1,5 @@
-SOURCES = %w(preamble support array_path query_string asset tag form)
+PHP = ENV['PHP'] || "/usr/local/bin/php"
+SOURCES = %w(primitive preamble support array_path query_string asset tag form)
 SOURCES_5_3 = %w(functional)
 
 OUTPUT = {
@@ -36,5 +37,5 @@ task :clean do
 end
 
 task :test => 'helpers-5.3.php' do
-  sh "cd test; php test.php"
+  sh "#{PHP} run_tests.php"
 end

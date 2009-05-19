@@ -1,5 +1,5 @@
 <?php
-class QueryStringTest extends TestCase
+class QueryStringTest extends ztest\UnitTestCase
 {
     function setup() {
         $this->array = array(
