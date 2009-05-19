@@ -40,7 +40,7 @@ function assert_equal($left, $right) {
     assert($left == $right);
 }
 
-require '../helpers.php';
+require '../helpers-5.3.php';
 require 'array_path_test.php';
 require 'query_string_test.php';
 
