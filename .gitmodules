@@ -1,0 +1,3 @@
+[submodule "vendor/ztest"]
+	path = vendor/ztest
+	url = git://github.com/jaz303/ztest.git
