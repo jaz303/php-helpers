@@ -1,5 +1,5 @@
 PHP = ENV['PHP'] || "/usr/local/bin/php"
-SOURCES = %w(primitive preamble support array_path query_string asset tag form)
+SOURCES = %w(preamble primitive support array_path query_string asset tag form)
 SOURCES_5_3 = %w(functional)
 
 OUTPUT = {
