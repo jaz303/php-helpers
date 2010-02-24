@@ -297,7 +297,7 @@ function i($src, $options_or_selector = array(), $options = array()) {
     $options += parse_simple_selector($options_or_selector);
     $options['src'] = url_for_image($src);
     $options += array('alt' => '');
-    return empty_tag('img', $as, $options);
+    return empty_tag('img', $options);
 }
 
 function link_to($html, $url, $options = array()) {
